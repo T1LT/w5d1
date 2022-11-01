@@ -68,6 +68,12 @@ class LinkedList
   end
 
   def include?(key)
+    i = @head.next
+    while i != @tail
+      return true if i.key == key
+      i = i.next
+    end
+    false
   end
 
   def append(key, val)
@@ -100,7 +106,13 @@ class LinkedList
   end
 
   def remove(key)
-    
+    i = @head.next
+    while i.key != key
+      i = i.next
+    end
+    i.prev.next = i.next
+    i.next.prev = i.prev
+    i.remove
   end
 
   def each
@@ -113,7 +125,7 @@ class LinkedList
   end
 
   # uncomment when you have `each` working and `Enumerable` included
-  # def to_s
-  #   inject([]) { |acc, link| acc << "[#{link.key}, #{link.val}]" }.join(", ")
-  # end
+  def to_s
+    inject([]) { |acc, link| acc << "[#{link.key}, #{link.val}]" }.join(", ")
+  end
 end
